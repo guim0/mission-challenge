@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mission Brasil: Frontend Challenge
+
+This is the test proposed by Mission Brasil.
+
+## Main Technologies
+
+The project utilizes the following technologies:
+
+- **NextJS**
+- **Typescript**
+- **Tailwind CSS**
+- **Postcss**
+- **shadcn/ui**
+
+## if you're going to test locally:
+
+After you cloned the repository, follow this steps:
+
+Next Auth needs to have a value on the `.env.local` called NEXTSECRET_AUTH, that must be generated:
+
+1. Open the terminal and type:
+
+```
+openssl rand -base64 32
+```
+
+2. Copy the code generated on your terminal and create a `.env.local` file to put this:
+
+```
+NEXTSECRET_AUTH={The code generated}
+```
+
+Now you need to generated more two values for your `.env.local` the `GITHUB_ID` and \_ `GITHUB_SECRET`
+
+[Click here to access your Github settings ](https://github.com/settings/apps)
+
+- Find the section called **OAuth Apps**
+- Go on **New OAuth App**
+
+You'll be redirect to a form called **Register a new OAuth application** with 4 Inputs
+
+on **Application name**:
+
+```
+nextauth-app
+```
+
+on **Homepage URL**
+
+```
+http://localhost:3000
+```
+
+on **Authorization callback URL**
+
+```
+http://localhost:3000/api/auth/callback/github
+```
+
+---
+
+**GREAT!** now that you configured, you need to get the **Client ID** and the **Client secrets**:
+
+- Copy the code from Client Id and go on .env.local and create a variable called `GITHUB_ID` and past the code, should be like this:
+
+```
+NEXTSECRET_AUTH={The code generated previously}
+GITHUB_ID={Past here the Client ID from github}
+```
+
+---
+
+- Now you must generated the Client secrets, you'll need to login again and the code i'll appear, then add a new variable on your `.env.local` just like the `GITHUB_ID` but called `GITHUB_SECRETS`, should be like this:
+
+```
+NEXTSECRET_AUTH={The code generated previously}
+GITHUB_ID={The code pasted previously}
+GITHUB_ID={Past here the Client secrets ID from github}
+```
 
 ## Getting Started
 
-First, run the development server:
+Make sure you have Node.js installed. Then, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Navigate to the project directory:
+
+   ```bash
+   cd mission-challenge
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm i
+   ```
+
+3. Start the project:
+
+   ```bash
+   npm run dev
+   ```
+
+## Deployed on Vercel:
+
+### [Click Here to access]()
+
+---
+
+## How to contact me:
+
+### [Linkedin](https://www.linkedin.com/in/guim0-dev)
+
+### My email
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+guimodev@gmail.com
+```
