@@ -16,11 +16,20 @@ import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
 
 import { toast } from "@/components/ui/use-toast";
-import { mockedList } from "@/app/api/list/items";
+import { cartList, mockedList } from "@/lib/mocked/list";
 import { useSession } from "next-auth/react";
 
 const CartPage = () => {
   const { status } = useSession();
+
+  const totalValue = () => {
+    const values = cartList.map((i) => i.price);
+    return values
+      .map(Number)
+      .reduce((acc, total) => acc + total, 0)
+      .toFixed(2);
+  };
+
   return (
     <main className="w-full flex flex-col bg-slate-950 h-dvh">
       {status === "loading" ? (
@@ -34,7 +43,10 @@ const CartPage = () => {
         </section>
       ) : (
         <>
-          <section className="flex container justify-end mt-8">
+          <section className="flex container justify-between mt-8">
+            <h3 className="text-white text-2xl font-medium">
+              This is your Cart
+            </h3>
             {status === "unauthenticated" ? (
               <Button
                 variant="secondary"
@@ -72,7 +84,7 @@ const CartPage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockedList.map((items, idx) => (
+                {cartList.map((items, idx) => (
                   <TableRow key={idx}>
                     <TableCell className="font-medium">{1 + idx}</TableCell>
                     <TableCell className="font-medium">{items.name}</TableCell>
@@ -84,14 +96,7 @@ const CartPage = () => {
               <TableFooter>
                 <TableRow>
                   <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-right">
-                    $
-                    {mockedList.reduce(
-                      (total, items) =>
-                        total + parseFloat(+`${items.price}` as any),
-                      0
-                    )}
-                  </TableCell>
+                  <TableCell className="text-right">${totalValue()}</TableCell>
                 </TableRow>
               </TableFooter>
             </Table>

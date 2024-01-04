@@ -17,7 +17,7 @@ import { Skeleton } from "./ui/skeleton";
 
 import { AvatarImage, Avatar } from "./ui/avatar";
 import { Badge } from "./ui/badge";
-import { mockedList } from "@/app/api/list/items";
+import { cartList } from "@/lib/mocked/list";
 
 const Navbar = () => {
   const { data, status } = useSession();
@@ -71,7 +71,7 @@ const Navbar = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem className="flex align-middle gap-3">
                     <Link href={"/cart"}>
-                      Card <Badge>{mockedList.length}</Badge>
+                      Card <Badge>{cartList.length}</Badge>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

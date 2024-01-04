@@ -41,14 +41,14 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_SECRETS as string,
     }),
   ],
-  session: {
-    strategy: "jwt",
-    maxAge: 4 * 60 * 60, // 4 hours
-  },
-  pages: {
-    signIn: "/",
+  callbacks: {
+    async jwt({ token }) {
+      token.role = "admin";
+      return token;
+    },
   },
 };
+
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

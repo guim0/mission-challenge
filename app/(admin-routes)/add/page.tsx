@@ -1,6 +1,6 @@
 "use client";
 
-import { mockedList } from "@/app/api/list/items";
+import { mockedList } from "@/lib/mocked/list";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,10 +9,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 const RegisterPage = () => {
   const [nameItem, setNameItem] = useState<string>("");
-  const [typeItem, setTypeItem] = useState<string>("default");
+  const [typeItem, setTypeItem] = useState<string>("Default");
   const [priceItem, setPriceItem] = useState<string>("default");
 
   const { push } = useRouter();
@@ -29,7 +30,7 @@ const RegisterPage = () => {
     };
 
     mockedList.push(newItem);
-    push("/");
+    push("/cart");
   };
 
   return (
