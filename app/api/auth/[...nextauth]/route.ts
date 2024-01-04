@@ -2,6 +2,7 @@ import { AuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
+import NextAuth from "next-auth/next";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -17,7 +18,6 @@ export const authOptions: AuthOptions = {
           return null;
         }
       },
-
       name: "Credentials",
       credentials: {
         username: {
@@ -45,4 +45,8 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
     maxAge: 4 * 60 * 60, // 4 hours
   },
+  secret: process.env.NEXTSECRET_AUTH,
 };
+export const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
