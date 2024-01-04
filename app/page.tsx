@@ -20,7 +20,7 @@ import Link from "next/link";
 import { mockedList } from "./api/list/items";
 
 export default function ListingPage() {
-  const { status } = useSession({ required: false });
+  const { status } = useSession();
   const { toast } = useToast();
 
   return (

@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import { toast } from "@/components/ui/use-toast";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
