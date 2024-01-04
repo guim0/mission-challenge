@@ -13,16 +13,14 @@ import {
 } from "@/components/ui/table";
 
 import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/use-toast";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-import { mockedList } from "./api/list/items";
+import { toast } from "@/components/ui/use-toast";
+import { mockedList } from "@/app/api/list/items";
+import { useSession } from "next-auth/react";
 
-export default function ListingPage() {
-  const { status } = useSession({ required: false });
-  const { toast } = useToast();
-
+const CartPage = () => {
+  const { status } = useSession();
   return (
     <main className="w-full flex flex-col bg-slate-950 h-dvh">
       {status === "loading" ? (
@@ -52,11 +50,11 @@ export default function ListingPage() {
                   });
                 }}
               >
-                Go to Card
+                Add new item
               </Button>
             ) : (
               <Button asChild>
-                <Link href="/cart">Go to Cart</Link>
+                <Link href="/add">Add new Item</Link>
               </Button>
             )}
           </section>
@@ -102,4 +100,6 @@ export default function ListingPage() {
       )}
     </main>
   );
-}
+};
+
+export default CartPage;

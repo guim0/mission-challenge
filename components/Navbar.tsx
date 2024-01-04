@@ -11,14 +11,17 @@ import BurgerIcon from "@/public/burger-menu.svg";
 import { useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { redirect } from "next/dist/server/api-utils";
+
 import Link from "next/link";
 import { Skeleton } from "./ui/skeleton";
 
 import { AvatarImage, Avatar } from "./ui/avatar";
+import { Badge } from "./ui/badge";
+import { mockedList } from "@/app/api/list/items";
 
 const Navbar = () => {
   const { data, status } = useSession();
+
   return (
     <main className="grow px-10 bg-slate-950 border-b-[1px] border-gray-200 py-4 text-white">
       <section className="flex justify-between  items-center">
@@ -40,34 +43,48 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className="mr-8">
-          {status === "unauthenticated" ? (
-            <Button variant="secondary" asChild>
-              <Link href={"/api/auth/signin"}>Entrar</Link>
-            </Button>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="secondary" size="icon">
-                  <Image src={BurgerIcon} alt="Menu" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Where to go?</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Register Item</DropdownMenuItem>
-                <DropdownMenuItem>List Items</DropdownMenuItem>
-                <DropdownMenuItem>Card</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Button variant="destructive" asChild>
-                    <Link href={"/api/auth/signout"}>Sair</Link>
+        {status === "loading" ? (
+          <Skeleton className="h-4 w-[330px]" />
+        ) : (
+          <div className="mr-8">
+            {status === "unauthenticated" ? (
+              <Button variant="secondary" asChild>
+                <Link href={"/api/auth/signin"}>Log in</Link>
+              </Button>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant="secondary" size="icon">
+                    <Image src={BurgerIcon} alt="Menu" />
                   </Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-        </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Where to go?</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {status === "authenticated" && (
+                    <DropdownMenuItem asChild>
+                      <Link href="/add">Register Item</Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem asChild>
+                    <Link href="/">List Items</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="flex align-middle gap-3">
+                    <Link href={"/cart"}>
+                      Card <Badge>{mockedList.length}</Badge>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Button variant="destructive" asChild>
+                      <Link href={"/api/auth/signout"}>Sign out</Link>
+                    </Button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
+        )}
       </section>
     </main>
   );

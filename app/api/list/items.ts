@@ -7,7 +7,7 @@ function generateMockData(numItems: number) {
 
   for (let i = 0; i < numItems; i++) {
     const name = `Item ${i + 1}`;
-    const type = i % 2 === 0 ? "default" : "secondary"; // Alterna entre 'default' e 'secondary'
+    const type = i % 2 === 0 ? "default" : "limited";
     const price = getRandomPrice();
 
     const item = {

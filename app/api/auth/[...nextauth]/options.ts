@@ -3,12 +3,10 @@ import Github from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
-export const options: NextAuthOptions = {
+const nextAuthOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        // Verify with credentials
-        // DOCS: https://next-auth.js.org/configuration/providers/credentials
         const mockedUser = { id: "33", name: "Jonh", password: "nextauth" };
         if (
           credentials?.username === mockedUser.name &&
@@ -43,4 +41,10 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRETS as string,
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 4 * 60 * 60, // 4 hours
+  },
 };
+
+export { nextAuthOptions };
