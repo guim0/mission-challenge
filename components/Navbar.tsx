@@ -20,7 +20,7 @@ import { AvatarImage, Avatar } from "./ui/avatar";
 const Navbar = () => {
   const { data, status } = useSession();
   return (
-    <main className="grow px-10 bg-slate-900 border-b-[1px] border-gray-200 py-4 text-white">
+    <main className="grow px-10 bg-slate-950 border-b-[1px] border-gray-200 py-4 text-white">
       <section className="flex justify-between  items-center">
         <div>
           {status === "unauthenticated" ? (
@@ -61,7 +61,7 @@ const Navbar = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <Button variant="destructive" asChild>
-                    <Link href={"/api/auth//signout"}>Sair</Link>
+                    <Link href={"/api/auth/signout"}>Sair</Link>
                   </Button>
                 </DropdownMenuItem>
               </DropdownMenuContent>
