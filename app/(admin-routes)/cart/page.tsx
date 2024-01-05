@@ -94,8 +94,8 @@ const CartPage = () => {
             )}
           </section>
 
-          <Table className="text-white w-[80%] my-5 mx-auto">
-            <TableHeader className="bg-gray-300 w-full">
+          <Table className="text-white w-[60%] my-5 mx-auto">
+            <TableHeader className="bg-gray-300">
               <TableRow>
                 <TableHead>Items</TableHead>
                 <TableHead>Name</TableHead>
@@ -121,7 +121,7 @@ const CartPage = () => {
 
             <TableFooter>
               <TableRow>
-                <TableCell colSpan={4}>Total</TableCell>
+                <TableCell colSpan={3}>Total</TableCell>
                 <TableCell className="text-right">${totalValue()}</TableCell>
               </TableRow>
             </TableFooter>
