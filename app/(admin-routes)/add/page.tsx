@@ -9,14 +9,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 
 const RegisterPage = () => {
   const [nameItem, setNameItem] = useState<string>("");
   const [typeItem, setTypeItem] = useState<string>("Default");
   const [priceItem, setPriceItem] = useState<string>("default");
 
-  const { push } = useRouter();
+  const { push, back } = useRouter();
   const handleNewItem = () => {
     if (nameItem.length <= 2) {
       return toast({
@@ -30,11 +29,14 @@ const RegisterPage = () => {
     };
 
     mockedList.push(newItem);
-    push("/cart");
+    push("/");
   };
 
   return (
     <main className="w-full  bg-slate-950 h-dvh px-6">
+      <div className="py-3">
+        <Button onClick={() => back()}>Return</Button>
+      </div>
       <section className="container w-[70%] pt-12">
         <form className="bg-gray-700 w-full p-5 rounded-sm flex flex-col gap-6">
           <h2 className="text-2xl font-medium text-white">Create new item</h2>

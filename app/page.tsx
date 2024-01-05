@@ -17,33 +17,25 @@ import { useToast } from "@/components/ui/use-toast";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-import { IProducts, mockedList } from "../lib/mocked/list";
+import { IProducts, cartList, mockedList } from "../lib/mocked/list";
 import { useEffect, useState } from "react";
 
 export default function ListingPage() {
-  const [list, setList] = useState<typeof mockedList>([]);
+  const [listing, setListing] = useState(mockedList);
   const { status } = useSession();
   const { toast } = useToast();
 
   const totalValue = () => {
-    const values = list.map((i) => i.price);
+    const values = mockedList.map((i) => i.price);
     return values
       .map(Number)
       .reduce((acc, total) => acc + total, 0)
       .toFixed(2);
   };
 
-  const handleRemoval = (ref?: string) => {
-    const filtered = mockedList.filter((i) => i.name !== ref);
-    if (ref === undefined) {
-      console.log("cheguei", ref);
-      return setList(mockedList);
-    } else setList(filtered);
+  const handleAdd = (handleAdd: IProducts) => {
+    cartList.push(handleAdd);
   };
-  useEffect(() => {
-    handleRemoval();
-  }, [list]);
-  console.log(list);
 
   return (
     <main className="w-full flex flex-col bg-slate-950 h-dvh">
@@ -59,7 +51,9 @@ export default function ListingPage() {
       ) : (
         <>
           <section className="flex container justify-between mt-8">
-            <h3 className="text-white text-2xl font-medium">Current list</h3>
+            <h3 className="text-white text-2xl font-medium border-b-[1px] border-gray-700 border-bot">
+              Add Items to your card or Create a new one
+            </h3>
             {status === "unauthenticated" ? (
               <Button
                 variant="secondary"
@@ -78,9 +72,15 @@ export default function ListingPage() {
                 Add More Items
               </Button>
             ) : (
-              <Button asChild>
-                <Link href="/add">Add More Items</Link>
-              </Button>
+              <div className="flex align-baseline gap-5">
+                <Button asChild>
+                  <Link href="/add">Create new Item</Link>
+                </Button>
+
+                <Button asChild>
+                  <Link href="/cart">Go to Cart</Link>
+                </Button>
+              </div>
             )}
           </section>
           <section className="container text-white">
@@ -90,7 +90,7 @@ export default function ListingPage() {
               </TableCaption>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Items</TableHead>
+                  <TableHead>Item ID</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Amount</TableHead>
@@ -98,15 +98,15 @@ export default function ListingPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {list?.map((items, idx) => (
+                {listing?.map((items: IProducts, idx) => (
                   <TableRow key={idx}>
                     <TableCell className="font-medium">{1 + idx}</TableCell>
                     <TableCell className="font-medium">{items.name}</TableCell>
                     <TableCell>{items.type}</TableCell>
                     <TableCell>${items.price}</TableCell>
                     <TableCell>
-                      <Button onClick={() => handleRemoval(items.name)}>
-                        Remove
+                      <Button onClick={() => handleAdd(...[items])}>
+                        Add to Card
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -65,9 +65,14 @@ const CartPage = () => {
                 Add new item
               </Button>
             ) : (
-              <Button asChild>
-                <Link href="/add">Add new Item</Link>
-              </Button>
+              <div className="flex align-baseline gap-5">
+                <Button asChild>
+                  <Link href="/">Return to Listing</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/add">Add new Item</Link>
+                </Button>
+              </div>
             )}
           </section>
           <section className="container text-white">
