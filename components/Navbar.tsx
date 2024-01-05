@@ -70,9 +70,7 @@ const Navbar = () => {
                     <Link href="/">List Items</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="flex align-middle gap-3">
-                    <Link href={"/cart"}>
-                      Card <Badge>{cartList.length}</Badge>
-                    </Link>
+                    <Link href={"/cart"}>Cart</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
