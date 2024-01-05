@@ -6,7 +6,6 @@ export interface IProducts {
 }
 
 function getRandomPrice() {
-  // Gera um preço aleatório entre 10 e 100
   return (Math.random() * (100 - 10) + 10).toFixed(2);
 }
 
@@ -22,7 +21,7 @@ function generateMockData(numItems: number) {
       id: idCounter++,
       name: name,
       type: type,
-      price: price,
+      price: `$${price}`,
     };
 
     mockData.push(item);

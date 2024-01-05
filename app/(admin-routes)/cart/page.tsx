@@ -24,7 +24,7 @@ const CartPage = () => {
   const [clear, setClear] = useState(false);
 
   const totalValue = () => {
-    const values = cartList.map((i) => i.price);
+    const values = cartList.map((i) => i.price.replace("$", ""));
     return values
       .map(Number)
       .reduce((acc, total) => acc + total, 0)
@@ -113,7 +113,7 @@ const CartPage = () => {
                     <TableCell className="font-medium">{1 + idx}</TableCell>
                     <TableCell className="font-medium">{items.name}</TableCell>
                     <TableCell>{items.type}</TableCell>
-                    <TableCell>${items.price}</TableCell>
+                    <TableCell>{items.price}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

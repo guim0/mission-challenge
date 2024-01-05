@@ -24,11 +24,8 @@ export default function ListingPage() {
   const { toast } = useToast();
 
   const totalValue = () => {
-    const values = mockedList.map((i) => i.price);
-    const refined = values.map((i) => i.includes("$").replace("$", ""));
-    console.log(refined);
+    const values = mockedList.map((i) => i.price.replace("$", ""));
 
-    console.log(values);
     return values
       .map(Number)
       .reduce((acc, total) => acc + total, 0)
@@ -117,11 +114,7 @@ export default function ListingPage() {
                   <TableCell>{1 + idx}</TableCell>
                   <TableCell>{items.name}</TableCell>
                   <TableCell>{items.type}</TableCell>
-                  <TableCell>
-                    {items.price.includes("$")
-                      ? `${items.price}`
-                      : `$${items.price}`}
-                  </TableCell>
+                  <TableCell>{items.price}</TableCell>
                   <TableCell className="text-right">
                     <Button onClick={() => handleAdd(...[items])}>
                       Add to Card
