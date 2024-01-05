@@ -18,10 +18,8 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { IProducts, cartList, mockedList } from "../lib/mocked/list";
-import { useEffect, useState } from "react";
 
 export default function ListingPage() {
-  const [listing, setListing] = useState(mockedList);
   const { status } = useSession();
   const { toast } = useToast();
 
@@ -33,8 +31,23 @@ export default function ListingPage() {
       .toFixed(2);
   };
 
-  const handleAdd = (handleAdd: IProducts) => {
-    cartList.push(handleAdd);
+  const handleAdd = (item: IProducts) => {
+    if (status === "unauthenticated") {
+      return toast({
+        title: "You must be logged to create/add an item!",
+        description: "Please click on Sign in to create a new item",
+        action: (
+          <ToastAction altText="Log in" asChild>
+            <Link href={"/api/auth/signin"}>Log in</Link>
+          </ToastAction>
+        ),
+      });
+    }
+    toast({
+      title: `${item.name} has been added to cart`,
+      description: "Check the Cart!",
+    });
+    cartList.push(item);
   };
 
   return (
@@ -83,43 +96,43 @@ export default function ListingPage() {
               </div>
             )}
           </section>
-          <section className="container text-white">
-            <Table>
-              <TableCaption>
-                <h2 className="text-white">Preview of your list</h2>
-              </TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Item ID</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Action</TableHead>
+
+          <Table className="text-white w-[80%] my-5 mx-auto">
+            <TableHeader className="bg-gray-300">
+              <TableRow>
+                <TableHead>Item ID</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead className="text-right">Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {mockedList?.map((items: IProducts, idx) => (
+                <TableRow key={idx}>
+                  <TableCell>{1 + idx}</TableCell>
+                  <TableCell>{items.name}</TableCell>
+                  <TableCell>{items.type}</TableCell>
+                  <TableCell>
+                    {items.price.includes("$")
+                      ? `${items.price}`
+                      : `$${items.price}`}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button onClick={() => handleAdd(...[items])}>
+                      Add to Card
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {listing?.map((items: IProducts, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-medium">{1 + idx}</TableCell>
-                    <TableCell className="font-medium">{items.name}</TableCell>
-                    <TableCell>{items.type}</TableCell>
-                    <TableCell>${items.price}</TableCell>
-                    <TableCell>
-                      <Button onClick={() => handleAdd(...[items])}>
-                        Add to Card
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={4}>Total</TableCell>
-                  <TableCell className="text-right">${totalValue()}</TableCell>
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </section>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={4}>Total</TableCell>
+                <TableCell className="text-right">${totalValue()}</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
         </>
       )}
     </main>

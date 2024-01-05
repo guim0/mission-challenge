@@ -4,7 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -16,18 +15,33 @@ import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
 
 import { toast } from "@/components/ui/use-toast";
-import { cartList, mockedList } from "@/lib/mocked/list";
+import { IProducts, cartList } from "@/lib/mocked/list";
 import { useSession } from "next-auth/react";
+import { useCallback, useState } from "react";
 
 const CartPage = () => {
   const { status } = useSession();
+  const [clear, setClear] = useState(false);
 
   const totalValue = () => {
     const values = cartList.map((i) => i.price);
+
     return values
       .map(Number)
       .reduce((acc, total) => acc + total, 0)
       .toFixed(2);
+  };
+
+  const clearCart = () => {
+    toast({
+      title: "Cart Cleared!",
+      description: "Go back to listing to add more!",
+      duration: 3000,
+    });
+
+    setClear(true);
+
+    return cartList.splice(0, cartList.length);
   };
 
   return (
@@ -69,27 +83,33 @@ const CartPage = () => {
                 <Button asChild>
                   <Link href="/">Return to Listing</Link>
                 </Button>
-                <Button asChild>
-                  <Link href="/add">Add new Item</Link>
+
+                <Button
+                  onClick={() => {
+                    clearCart();
+                  }}
+                >
+                  Clear cart
                 </Button>
               </div>
             )}
           </section>
-          <section className="container text-white">
-            <Table>
-              <TableCaption>
-                <h2 className="text-white">Listing your items</h2>
-              </TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Items</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Amount</TableHead>
-                </TableRow>
-              </TableHeader>
+
+          <Table className="w-[80%] my-5 mx-auto text-white">
+            <TableHeader className="bg-gray-300 w-full">
+              <TableRow>
+                <TableHead>Items</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            {clear ? (
+              <></>
+            ) : (
               <TableBody>
-                {cartList.map((items, idx) => (
+                {cartList.map((items: IProducts, idx) => (
                   <TableRow key={idx}>
                     <TableCell className="font-medium">{1 + idx}</TableCell>
                     <TableCell className="font-medium">{items.name}</TableCell>
@@ -98,14 +118,15 @@ const CartPage = () => {
                   </TableRow>
                 ))}
               </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-right">${totalValue()}</TableCell>
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </section>
+            )}
+
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={4}>Total</TableCell>
+                <TableCell className="text-right">${totalValue()}</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
         </>
       )}
     </main>

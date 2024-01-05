@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import InputMoney from "@/components/InputMoney";
 
 const RegisterPage = () => {
   const [nameItem, setNameItem] = useState<string>("");
@@ -27,6 +28,10 @@ const RegisterPage = () => {
       type: typeItem,
       price: priceItem,
     };
+    toast({
+      title: "New Item Added!",
+      description: "Check your listing",
+    });
 
     mockedList.push(newItem);
     push("/");
@@ -37,7 +42,7 @@ const RegisterPage = () => {
       <div className="py-3">
         <Button onClick={() => back()}>Return</Button>
       </div>
-      <section className="container w-[70%] pt-12">
+      <section className="container max-w-[550px] pt-12">
         <form className="bg-gray-700 w-full p-5 rounded-sm flex flex-col gap-6">
           <h2 className="text-2xl font-medium text-white">Create new item</h2>
           <div>
@@ -79,11 +84,9 @@ const RegisterPage = () => {
             <Label className="text-white" htmlFor="Price">
               Item Price
             </Label>
-            <Input
-              name="price"
+            <InputMoney
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="Price of the item"
-              type="number"
-              max={999}
               onChange={(e) => setPriceItem(e.currentTarget.value)}
             />
           </div>
