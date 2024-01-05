@@ -25,6 +25,8 @@ export default function ListingPage() {
 
   const totalValue = () => {
     const values = mockedList.map((i) => i.price);
+
+    console.log(values);
     return values
       .map(Number)
       .reduce((acc, total) => acc + total, 0)
@@ -64,7 +66,7 @@ export default function ListingPage() {
       ) : (
         <>
           <section className="flex container justify-between mt-8">
-            <h3 className="text-white text-2xl font-medium border-b-[1px] border-gray-700 border-bot">
+            <h3 className="text-white text-2xl font-medium border-b-[1px] border-gray-700 ">
               Add Items to your card or Create a new one
             </h3>
             {status === "unauthenticated" ? (

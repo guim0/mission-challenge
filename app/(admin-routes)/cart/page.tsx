@@ -17,7 +17,7 @@ import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
 import { IProducts, cartList } from "@/lib/mocked/list";
 import { useSession } from "next-auth/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 const CartPage = () => {
   const { status } = useSession();
@@ -25,7 +25,6 @@ const CartPage = () => {
 
   const totalValue = () => {
     const values = cartList.map((i) => i.price);
-
     return values
       .map(Number)
       .reduce((acc, total) => acc + total, 0)
@@ -58,7 +57,7 @@ const CartPage = () => {
       ) : (
         <>
           <section className="flex container justify-between mt-8">
-            <h3 className="text-white text-2xl font-medium">
+            <h3 className="text-white text-2xl font-medium border-b-[1px] border-gray-700">
               This is your Cart
             </h3>
             {status === "unauthenticated" ? (
@@ -95,7 +94,7 @@ const CartPage = () => {
             )}
           </section>
 
-          <Table className="w-[80%] my-5 mx-auto text-white">
+          <Table className="text-white w-[80%] my-5 mx-auto">
             <TableHeader className="bg-gray-300 w-full">
               <TableRow>
                 <TableHead>Items</TableHead>
