@@ -25,6 +25,8 @@ export default function ListingPage() {
 
   const totalValue = () => {
     const values = mockedList.map((i) => i.price);
+    const refined = values.map((i) => i.includes("$").replace("$", ""));
+    console.log(refined);
 
     console.log(values);
     return values
